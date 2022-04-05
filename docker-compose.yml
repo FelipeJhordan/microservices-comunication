@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+  auth-db:
+    image: postgres:11
+    container_name: auth-db
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=auth-db
+
+  product-db:
+    image: postgres:11
+    container_name: product-db
+    restart: always
+    ports:
+      - 5433:5432
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=product-db
+
+  sales-db:
+    image: bitnami/mongodb
+    container_name: sales-db
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      - MONGODB_USERNAME=admin
+      - MONGODB_DATABASE=sales
+      - MONGODB_PASSWORD=password123
+      - MONGODB_ROOT_PASSWORD=password1234
+  sales-rabbit:
+    image: rabbitmq:3-management
+    container_name: sales-RABBIT
+    ports:
+      - 5672:5672
+      - 25676:25676
+      - 15672:15672
+    
+
