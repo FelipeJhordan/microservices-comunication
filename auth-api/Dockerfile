@@ -3,4 +3,4 @@ WORKDIR .
 COPY . .
 RUN npm install
 EXPOSE 8080
-CMD ["node", "app.js"] 
+CMD ["node","--experimental-modules", "--es-module-specifier-resolution=node","app.js"] 
