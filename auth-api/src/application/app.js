@@ -1,6 +1,20 @@
 import express from "express";
+import dotenv from 'dotenv'
+dotenv.config()
+
+
+import * as db from '../infra/sequelize/initialData.js'
+
+import userRoutes from '../modules/user/routes/UserRoutes'
 
 const app = express()
+
+app.use(express.json())
+
+app.use(userRoutes)
+
+
+db.createInitialData()
 
 const env = process.env
 
