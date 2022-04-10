@@ -13,6 +13,6 @@ import java.util.Optional;
         url="${app-config.services.sales}"
 )
 public interface SalesClient {
-    @GetMapping("product/{productId}")
+    @GetMapping("/api/order/product/{productId}")
     Optional<SalesProductResponse> findSalesByProductId(@PathVariable Integer productId);
 }
