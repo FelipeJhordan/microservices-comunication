@@ -4,10 +4,10 @@ services:
     image: postgres:11
     container_name: auth-db
     restart: always
+    networks:
+      - sales-network
     ports:
       - 5432:5432
-    volumes:
-      - ./data/postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=123456
@@ -17,10 +17,10 @@ services:
     image: postgres:11
     container_name: product-db
     restart: always
+    networks:
+      - sales-network
     ports:
       - 5433:5432
-    volumes:
-      - ./data/postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=123456
@@ -30,6 +30,8 @@ services:
     image: bitnami/mongodb
     container_name: sales-db
     restart: always
+    networks:
+      - sales-network
     ports:
       - 27017:27017
     environment:
@@ -37,13 +39,19 @@ services:
       - MONGODB_DATABASE=sales
       - MONGODB_PASSWORD=password123
       - MONGODB_ROOT_PASSWORD=password1234
-  sales-rabbit:
+  sales_rabbit:
     image: rabbitmq:3-management
-    container_name: sales-RABBIT
+    container_name: sales_rabbit
+    hostname: sales-rabbit
+    networks:
+      - sales-network
     ports:
       - 5672:5672
       - 25676:25676
       - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
   
   auth-api:
     build: './auth-api'
@@ -56,6 +64,8 @@ services:
   product-api:
     build: './product-api'
     container_name: product-api
+    networks:
+      - sales-network
     environment:
       - PORT=8081
     ports:
@@ -64,9 +74,14 @@ services:
   sales-api:
     build: './sales-api'
     container_name: sales-api
+    networks:
+      - sales-network
     environment:
       - PORT=8082
     ports:
       - 8082:8082
     
+networks:
+  sales-network:
+    driver: bridge
 
