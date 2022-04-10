@@ -6,9 +6,11 @@ import feign.RequestTemplate;
 import org.apache.commons.fileupload.RequestContext;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Component
 public class FeignClientAuthInterceptor implements RequestInterceptor {
     private static final String AUTHORIZATION = "Authorization";
 
