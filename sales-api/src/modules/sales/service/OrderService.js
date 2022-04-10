@@ -58,7 +58,6 @@ class OrderService {
     }
 
     async sendMessage(createdOrder) {
-        console.log("aqui "+createdOrder)
         const message = {
             salesId: createdOrder.id,
             products: createdOrder.products

@@ -42,7 +42,6 @@ export async function connectRabbitMq() {
         setInterval(async function() {
             await connectRabbitMqAndCreateQueues()
         }, HALF_MINUTE)
-        console.log("aqui")
         return
     }
     await connectRabbitMqAndCreateQueues()

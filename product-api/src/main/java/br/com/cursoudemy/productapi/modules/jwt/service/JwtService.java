@@ -23,7 +23,6 @@ public class JwtService {
     public void validateAuthorization(String token) {
         var accessToken = extractToken(token);
         try {
-            System.out.println(accessToken);
             var claims = Jwts.parserBuilder()
                     .setSigningKey(Keys.hmacShaKeyFor(apiSecret.getBytes()))
                     .build()
